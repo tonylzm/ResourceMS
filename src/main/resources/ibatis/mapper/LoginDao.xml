@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yokit.resource_management.framework.dao.LoginDao">
+    <resultMap id="BaseResultMap" type="com.yokit.resource_management.entity.Login">
+        <id column="login_id" jdbcType="INTEGER" property="loginId"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="login_time" jdbcType="TIMESTAMP" property="loginTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        login_id
+        , user_id, login_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from login
+        where login_id = #{loginId,jdbcType=INTEGER}
+    </select>
+    <select id="selectTotalCount" resultType="java.lang.Integer">
+        select count(*)
+        from login
+    </select>
+    <select id="selectLoginTimeByUserId" resultType="java.util.Date">
+        SELECT login_time
+        FROM login
+        WHERE user_id = #{userId}
+        ORDER BY login_time DESC LIMIT 1
+    </select>
+    <select id="selectTodayCountByUserId" resultType="java.lang.Integer">
+        select COUNT(*)
+        from login
+        where login_time > curdate()
+          AND user_id = #{userId};
+    </select>
+    <select id="selectLoginAll" resultType="com.yokit.resource_management.entity.Login">
+        select * from login
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from login
+        where login_id = #{loginId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="login_id" keyProperty="loginId"
+            parameterType="com.yokit.resource_management.entity.Login" useGeneratedKeys="true">
+        insert into login (user_id, login_time)
+        values (#{userId,jdbcType=INTEGER}, #{loginTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" keyColumn="login_id" keyProperty="loginId"
+            parameterType="com.yokit.resource_management.entity.Login" useGeneratedKeys="true">
+        insert into login
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="loginTime != null">
+                login_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="loginTime != null">
+                #{loginTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yokit.resource_management.entity.Login">
+        update login
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="loginTime != null">
+                login_time = #{loginTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where login_id = #{loginId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yokit.resource_management.entity.Login">
+        update login
+        set user_id    = #{userId,jdbcType=INTEGER},
+            login_time = #{loginTime,jdbcType=TIMESTAMP}
+        where login_id = #{loginId,jdbcType=INTEGER}
+    </update>
+</mapper>

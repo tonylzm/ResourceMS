@@ -1,0 +1,34 @@
+# 应用web端口
+server:
+  port: 8081
+#应用名称
+spring:
+  application:
+    name: resource-management
+#数据库配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/resourcems?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+#jackson序列化配置，跳过为空的字段
+  jackson:
+    default-property-inclusion: non_empty
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+#  配置mybatis
+mybatis:
+  mapper-locations: classpath:/ibatis/mapper/*.xml
+  config-location: classpath:/ibatis/mybatis-config.xml
+# app密钥，用于JWT验证
+app:
+  secretKey: C34VJn$5h#peS*Tw!vKrNVq2NzScTZ^n
+#控制台打印sql语句
+logging:
+  level:
+    com.yokit.resource_management.framework.dao: debug
+
+user:
+  file:
+    path: D:/temp/upload/imag/
+
