@@ -49,8 +49,8 @@ public class CarController {
    * @param
    * @return
    */
-  @RequestMapping(value = "/searchcar", method = RequestMethod.GET)
-  public Map getCarByName(@RequestParam(value = "searchCar") String seaCar,@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
+  @RequestMapping(value = "/searchCar", method = RequestMethod.GET)
+  public Map getCarByName(@RequestParam(value = "search") String seaCar,@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
     this.searchcar = seaCar;
     String searchCar = searchcar;
     PageHelper.startPage(pageNum, pageSize);

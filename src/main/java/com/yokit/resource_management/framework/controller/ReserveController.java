@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * @author fengzeng
+ * @author tonylin
  * @create 2021/6/25 3:02
  */
 @RestController
@@ -44,6 +44,14 @@ public class ReserveController {
     return map;
   }
 
+
+    /**
+     * 分页查询预约表的所有信息，根据状态查询
+     * @param pageNum
+     * @param pageSize
+     * @param statue
+     * @return
+     */
   @RequestMapping(value = "/ReservationList/{statue}", method = RequestMethod.GET)
     public Map getReservationListByStatue(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @PathVariable("statue") String statue) {
         PageHelper.startPage(pageNum,pageSize);
@@ -127,6 +135,14 @@ public class ReserveController {
       return new ResponseDto(200,"获取预约信息成功",objects);
   }
 
+    /**
+     * 分页查询预约表的所有信息
+     * @param statue
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+
     @GetMapping("/reserves/{statue}")
     public Map<String, Object> selByReserve(@PathVariable String statue, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
         // 分别调用 selRoom 和 selCar 方法，并传递分页参数
@@ -151,6 +167,14 @@ public class ReserveController {
         return result;
     }
 
+    /**
+     * 重新申请预约
+     * @param reserveId
+     * @param req
+     * @return
+     * @throws ParseException
+     */
+
     @PutMapping("/reserves/{reserveId}")
     //重新申请预约，更新预约记录中的字段
     public ResponseDto updateReserve(@PathVariable String reserveId, @RequestBody Map<String, String> req) throws ParseException {
@@ -169,6 +193,13 @@ public class ReserveController {
     }
 
 
+    /**
+     * 通过或者驳回预约
+     * @param type
+     * @param reserveId
+     * @param req
+     * @return
+     */
     @PutMapping("/reserve/{type}/{reserveId}")
     //通过或者驳回预约，只更新字段，不产生新的预约记录
     public ResponseDto updateReserve(@PathVariable String type, @PathVariable String reserveId, @RequestBody Map<String, String> req) {
@@ -185,6 +216,12 @@ public class ReserveController {
         return new ResponseDto(200, "更新成功");
     }
 
+
+    /**
+     * 删除预约
+     * @param userId
+     * @return
+     */
     @GetMapping("/reserved/{userId}")
     //查询用户是否有预约记录，如果有一个在申请中，或者已通过，就返回true
     public ResponseDto checkReserved(@PathVariable String userId) {
@@ -192,5 +229,21 @@ public class ReserveController {
         boolean reserved = reserveService.checkReserved(userId_);
         return new ResponseDto(200, "查询成功", reserved);
     }
+
+    //查询表中已通过申请的开始时间和结束时间
+    @GetMapping("/reservetime")
+    public ResponseDto selByCarId(@RequestParam("carId") String carId,@RequestParam("date") String date) {
+        Integer carId_ = Integer.parseInt(carId);
+        List<ResersvationRoomCar> reservations = reserveService.selByCarId(carId_, date);
+        return new ResponseDto(200, "查询成功", reservations);
+    }
+
+    @GetMapping("/reserveroomtime")
+    public ResponseDto selByRoomId(@RequestParam("roomId") String roomId,@RequestParam("date") String date) {
+        Integer roomId_ = Integer.parseInt(roomId);
+        List<ResersvationRoomCar> reservations = reserveService.selByRoomId(roomId_, date);
+        return new ResponseDto(200, "查询成功", reservations);
+    }
+
 
 }

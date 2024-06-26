@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author fengzeng
+ * @author tonylin
  * @create 2021/6/25 2:58
  */
 @RestController
@@ -50,8 +50,8 @@ public class RoomController {
      * @param seaRoom  searchroom
      * @return
      */
-    @RequestMapping(value = "/searchroom", method = RequestMethod.GET)
-    public Map getRoomByName(@RequestParam(value = "searchRoom") String seaRoom,@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
+    @RequestMapping(value = "/searchRoom", method = RequestMethod.GET)
+    public Map getRoomByName(@RequestParam(value = "search") String seaRoom,@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
         this.seaRoom = seaRoom;
         String searchName = seaRoom;
         PageHelper.startPage(pageNum, pageSize);

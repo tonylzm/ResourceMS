@@ -45,4 +45,8 @@ public interface ReservationDao {
     List<ResersvationRoomCar> selRoom(String state);
 
     List<ResersvationRoomCar> selByUserId(Integer userId);
+
+    List<ResersvationRoomCar> seltime(@Param("carId") Integer carId, @Param("date") String date);
+
+    List<ResersvationRoomCar> selRoomtime(@Param("roomId") Integer roomId, @Param("date") String date);
 }

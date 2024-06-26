@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,4 +66,31 @@ public class ReserveService {
   }
   return allRejected;
   }
+
+  public List selByCarId(Integer carId, String date) {
+    //返回开始时间和结束时间，如果有多个时间段，那就返回多个时间段
+    //将list中每个时间段的开始时间和结束时间拼接成字符串，用-分隔，删除日期部分，返回一个新list
+    List<ResersvationRoomCar> reservations = reservationDao.seltime(carId, date);
+    return getList(reservations);
+
+  }
+
+  public List selByRoomId(Integer roomId, String date) {
+    //返回开始时间和结束时间，如果有多个时间段，那就返回多个时间段
+    //将list中每个时间段的开始时间和结束时间拼接成字符串，用-分隔，删除日期部分，返回一个新list
+    List<ResersvationRoomCar> reservations = reservationDao.selRoomtime(roomId, date);
+    return getList(reservations);
+  }
+
+  private List getList(List<ResersvationRoomCar> reservations) {
+    List<String> times = new ArrayList<>();
+    for (ResersvationRoomCar reservation : reservations) {
+      //格式化时间，只保留时分秒
+      String startTime = reservation.getStartTime().toString().substring(11, 19);
+      String endTime = reservation.getEndTime().toString().substring(11, 19);
+      times.add(startTime + "-" + endTime);
+    }
+    return times;
+  }
+
 }
