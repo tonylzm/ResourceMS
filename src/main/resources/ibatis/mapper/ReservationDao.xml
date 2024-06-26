@@ -39,13 +39,13 @@ and user_id=#{userId} and reserve_state=#{state};
         SELECT r.reserve_id, r.user_id,u.login_name, c.car_name, c.car_pic, r.create_time, r.start_time, r.end_time, r.apply_reason, r.reserve_state
         FROM car c, reservation r,user u
         WHERE c.car_id = r.car_id and u.user_id = r.user_id
-          AND r.reserve_state = #{state};
+          AND r.reserve_state = #{state}
     </select>
   <select id="selRoom" resultType="com.yokit.resource_management.dto.ResersvationRoomCar">
         SELECT e.reserve_id,e.user_id,u.login_name,r.room_name,r.room_pic,e.create_time,e.start_time,e.end_time,e.apply_reason,reserve_state
         FROM room r,reservation e,user u
         where r.room_id=e.room_id and u.user_id=e.user_id
-          and reserve_state=#{state};
+          and reserve_state=#{state}
  </select>
     <select id="SelectReservationAll" resultType="com.yokit.resource_management.entity.Reservation">
         select * from reservation

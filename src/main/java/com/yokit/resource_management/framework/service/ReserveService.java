@@ -1,6 +1,7 @@
 package com.yokit.resource_management.framework.service;
 
 
+import com.github.pagehelper.PageHelper;
 import com.yokit.resource_management.dto.ResersvationRoomCar;
 import com.yokit.resource_management.entity.Reservation;
 import com.yokit.resource_management.framework.dao.ReservationDao;
@@ -42,11 +43,14 @@ public class ReserveService {
     reservationDao.updateByPrimaryKeySelective(reservation);
   }
 
-  public List<ResersvationRoomCar> selCar(String state) {
+  public List<ResersvationRoomCar> selRoom(String state, int pageNum, int pageSize) {
+    PageHelper.startPage(pageNum, pageSize);
+    return reservationDao.selRoom(state);
+  }
+
+  public List<ResersvationRoomCar> selCar(String state, int pageNum, int pageSize) {
+    PageHelper.startPage(pageNum, pageSize);
     return reservationDao.selCar(state);
   }
 
-    public List<ResersvationRoomCar> selRoom(String state) {
-        return reservationDao.selRoom(state);
-    }
 }

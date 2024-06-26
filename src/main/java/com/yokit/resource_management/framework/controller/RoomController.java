@@ -73,16 +73,22 @@ public class RoomController {
      * @Param adrm addroom
      **/
     @RequestMapping(value = "/addrooms", method = RequestMethod.POST)
-    public ResponseDto addrooms(@RequestBody Map<String, String> addRoom) {
-        String roomName = addRoom.get("roomName");
-        String roomDesc = addRoom.get("roomDesc");
-        Integer personNumber = Integer.parseInt(addRoom.get("personNumber"));
-        String roomPic = addRoom.get("roomPic");
+    public ResponseDto addrooms(@RequestBody Map<String, Object> addRoom) {
 
+        String roomName = (String) addRoom.get("roomName");
+        Object roomDescObj =  addRoom.get("roomDesc");
+        String roomPic = (String) addRoom.get("roomPic");
+
+        String roomDesc;
+        if (roomDescObj instanceof List) {
+            // 如果 carDesc 是一个列表，将其转换为字符串
+            roomDesc = String.join(", ", (List<String>) roomDescObj);
+        } else {
+            roomDesc = (String) roomDescObj;
+        }
         Room room = new Room();
         room.setRoomName(roomName);
         room.setRoomDesc(roomDesc);
-        room.setPersonNumber(personNumber);
         room.setRoomPic(roomPic);
         room.setResourceId(102);
         roomService.insertRoom(room);

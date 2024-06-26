@@ -128,28 +128,29 @@ public class ReserveController {
   }
 
     @GetMapping("/reserves/{statue}")
-    public Map selByReserve(@PathVariable String statue,@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize){
-        PageHelper.startPage(pageNum,pageSize);
+    public Map<String, Object> selByReserve(@PathVariable String statue, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
+        // 分别调用 selRoom 和 selCar 方法，并传递分页参数
+        List<ResersvationRoomCar> rooms = reserveService.selRoom(statue, pageNum, pageSize);
+        List<ResersvationRoomCar> cars = reserveService.selCar(statue, pageNum, pageSize);
+
+        // 将返回的结果存储在一个集合中
         List<Object> objects = new ArrayList<>();
-        List<ResersvationRoomCar> rooms= reserveService.selRoom(statue);
-        List<ResersvationRoomCar > cars = reserveService.selCar(statue);
-        //由于传回来的数据是数组类型的，所以将他们的元素都单独取出来，存储在list里面
-        for (ResersvationRoomCar r:rooms
-        ) {
-            objects.add(r);
-        }
-        for (ResersvationRoomCar c:cars
-        ) {
-            objects.add(c);
-        }
-        PageInfo<Object> of = PageInfo.of(objects);
-        Map map = new HashMap();
-        map.put("status", 200);
-        map.put("msg", "获取预约列表成功");
-        map.put("data", of.getList());
-        map.put("total", of.getTotal());
-        return map;
+        objects.addAll(rooms);
+        objects.addAll(cars);
+
+        // 使用 PageInfo 包装结果
+        PageInfo<Object> pageInfo = new PageInfo<>(objects);
+
+        // 准备返回结果
+        Map<String, Object> result = new HashMap<>();
+        result.put("status", 200);
+        result.put("msg", "获取预约列表成功");
+        result.put("data", pageInfo.getList());
+        result.put("total", pageInfo.getTotal());
+
+        return result;
     }
+
 
     @PutMapping("/reserve/{type}/{reserveId}")
     //通过或者驳回预约，只更新字段，不产生新的预约记录
