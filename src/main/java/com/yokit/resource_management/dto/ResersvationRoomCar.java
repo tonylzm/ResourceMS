@@ -16,6 +16,8 @@ import java.util.Date;
 public class ResersvationRoomCar {
     private Integer reserveId;
     private String carName;
+    private String userId;
+    private String loginName;
     private String roomName;
     private String carPic;
     private String roomPic;

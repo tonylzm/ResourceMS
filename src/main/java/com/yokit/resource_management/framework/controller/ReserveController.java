@@ -44,6 +44,19 @@ public class ReserveController {
     return map;
   }
 
+  @RequestMapping(value = "/ReservationList/{statue}", method = RequestMethod.GET)
+    public Map getReservationListByStatue(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @PathVariable("statue") String statue) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Reservation> all = reserveService.SelectAllByStatue(statue);
+        PageInfo<Reservation> of = PageInfo.of(all);
+        Map map = new HashMap();
+        map.put("status", 200);
+        map.put("msg", "获取预约列表成功");
+        map.put("data", of.getList());
+        map.put("total", of.getTotal());
+        return map;
+    }
+
 
 
   /**
@@ -113,4 +126,45 @@ public class ReserveController {
     }
       return new ResponseDto(200,"获取预约信息成功",objects);
   }
+
+    @GetMapping("/reserves/{statue}")
+    public Map selByReserve(@PathVariable String statue,@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        List<Object> objects = new ArrayList<>();
+        List<ResersvationRoomCar> rooms= reserveService.selRoom(statue);
+        List<ResersvationRoomCar > cars = reserveService.selCar(statue);
+        //由于传回来的数据是数组类型的，所以将他们的元素都单独取出来，存储在list里面
+        for (ResersvationRoomCar r:rooms
+        ) {
+            objects.add(r);
+        }
+        for (ResersvationRoomCar c:cars
+        ) {
+            objects.add(c);
+        }
+        PageInfo<Object> of = PageInfo.of(objects);
+        Map map = new HashMap();
+        map.put("status", 200);
+        map.put("msg", "获取预约列表成功");
+        map.put("data", of.getList());
+        map.put("total", of.getTotal());
+        return map;
+    }
+
+    @PutMapping("/reserve/{type}/{reserveId}")
+    //通过或者驳回预约，只更新字段，不产生新的预约记录
+    public ResponseDto updateReserve(@PathVariable String type, @PathVariable String reserveId, @RequestBody Map<String, String> req) {
+        Integer reserveId_ = Integer.parseInt(reserveId);
+        Reservation reservation = new Reservation();
+        reservation.setReserveId(reserveId_);
+        if ("pass".equals(type)) {
+            reservation.setReserveState("已通过");
+        } else if ("reject".equals(type)) {
+            reservation.setReserveState("已驳回");
+            reservation.setRejectReason(req.get("rejectReason"));
+        }
+      reserveService.updateReserve(reservation);
+        return new ResponseDto(200, "更新成功");
+    }
+
 }

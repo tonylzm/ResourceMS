@@ -33,4 +33,20 @@ public class ReserveService {
   public List<Reservation> SelectAll() {
     return reservationDao.SelectReservationAll();
   }
+
+  public List<Reservation> SelectAllByStatue(String statue) {
+    return reservationDao.selReservationAllByState(statue);
+  }
+
+  public void updateReserve(Reservation reservation) {
+    reservationDao.updateByPrimaryKeySelective(reservation);
+  }
+
+  public List<ResersvationRoomCar> selCar(String state) {
+    return reservationDao.selCar(state);
+  }
+
+    public List<ResersvationRoomCar> selRoom(String state) {
+        return reservationDao.selRoom(state);
+    }
 }

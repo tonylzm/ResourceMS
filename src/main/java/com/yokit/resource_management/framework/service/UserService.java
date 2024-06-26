@@ -39,4 +39,8 @@ public class UserService {
     public User selectUserById(Integer userId) {
     return userDao.selectByPrimaryKey(userId);
     }
+
+    public void deleteUser(Integer userId) {
+    userDao.deleteByPrimaryKey(userId);
+    }
 }

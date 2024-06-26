@@ -79,6 +79,12 @@ public class UserController {
         return new ResponseDto(200, "更新成功");
     }
 
+    @DeleteMapping("/user/{userId}")
+    public ResponseDto deleteUser(@PathVariable Integer userId) {
+        userService.deleteUser(userId);
+        return new ResponseDto(200, "删除成功");
+    }
+
     @GetMapping("/user/{userId}")
     public ResponseDto getUser(@PathVariable Integer userId) {
         User user = userService.selectUserById(userId);
