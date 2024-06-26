@@ -151,6 +151,23 @@ public class ReserveController {
         return result;
     }
 
+    @PutMapping("/reserves/{reserveId}")
+    //重新申请预约，更新预约记录中的字段
+    public ResponseDto updateReserve(@PathVariable String reserveId, @RequestBody Map<String, String> req) throws ParseException {
+        Integer reserveId_ = Integer.parseInt(reserveId);
+        Reservation reservation = new Reservation();
+        reservation.setReserveId(reserveId_);
+        reservation.setApplyReason(req.get("applyReason"));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date startTime = simpleDateFormat.parse(req.get("startTime"));
+        Date endTime = simpleDateFormat.parse(req.get("endTime"));
+        reservation.setStartTime(startTime);
+        reservation.setEndTime(endTime);
+        reservation.setReserveState("申请中");
+        reserveService.updateReserve(reservation);
+        return new ResponseDto(200, "更新成功");
+    }
+
 
     @PutMapping("/reserve/{type}/{reserveId}")
     //通过或者驳回预约，只更新字段，不产生新的预约记录
@@ -166,6 +183,14 @@ public class ReserveController {
         }
       reserveService.updateReserve(reservation);
         return new ResponseDto(200, "更新成功");
+    }
+
+    @GetMapping("/reserved/{userId}")
+    //查询用户是否有预约记录，如果有一个在申请中，或者已通过，就返回true
+    public ResponseDto checkReserved(@PathVariable String userId) {
+        Integer userId_ = Integer.parseInt(userId);
+        boolean reserved = reserveService.checkReserved(userId_);
+        return new ResponseDto(200, "查询成功", reserved);
     }
 
 }

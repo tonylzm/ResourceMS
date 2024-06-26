@@ -53,4 +53,16 @@ public class ReserveService {
     return reservationDao.selCar(state);
   }
 
+  public boolean checkReserved(Integer userId) {
+    //检查用户是否有预约记录，且预约状态如果为已驳回那就返回false
+   boolean allRejected = true;
+  List<ResersvationRoomCar> reservations = reservationDao.selByUserId(userId);
+  for (ResersvationRoomCar reservation : reservations) {
+    if (!reservation.getReserveState().equals("已驳回")) {
+      allRejected = false;
+      break;
+    }
+  }
+  return allRejected;
+  }
 }

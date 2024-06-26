@@ -43,4 +43,6 @@ public interface ReservationDao {
     List<ResersvationRoomCar> selCar(String state);
 
     List<ResersvationRoomCar> selRoom(String state);
+
+    List<ResersvationRoomCar> selByUserId(Integer userId);
 }

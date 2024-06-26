@@ -25,6 +25,7 @@ public class ResersvationRoomCar {
     private Date endTime;
     private Date createTime;
     private String applyReason;
+    private String rejectReason;
     private Object reserveState;
 
 
