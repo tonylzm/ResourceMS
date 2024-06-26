@@ -83,4 +83,15 @@
             login_time = #{loginTime,jdbcType=TIMESTAMP}
         where login_id = #{loginId,jdbcType=INTEGER}
     </update>
+
+    <select id="getPassword" resultType="java.lang.String">
+        select password from user
+        where user_id=#{userId}
+    </select>
+
+    <update id="passwordChange">
+        update user
+        set password=#{newPassword}
+        where user_id=#{userId}
+    </update>
 </mapper>

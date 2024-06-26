@@ -36,4 +36,15 @@ public class LoginService {
   public List<Login> selectAll() {
     return loginDao.selectLoginAll();
   }
+
+  public boolean verifyPassword(String oldPassword,Integer userId) {
+    String password=loginDao.getPassword(userId);
+    if(oldPassword.equals(password)){
+      return true;
+    }
+    return false;
+  }
+  public boolean passwordChange(String newPassword,Integer userId){
+    return  loginDao.passwordChange(newPassword,userId);
+  }
 }

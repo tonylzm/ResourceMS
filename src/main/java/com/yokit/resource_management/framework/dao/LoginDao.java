@@ -1,6 +1,7 @@
 package com.yokit.resource_management.framework.dao;
 
 import com.yokit.resource_management.entity.Login;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -28,4 +29,8 @@ public interface LoginDao {
   int selectTodayCountByUserId(Integer userId);
 
   List<Login> selectLoginAll();
+
+  String getPassword(@Param("userId")Integer userId);
+  boolean passwordChange(@Param("newPassword") String newPassword,@Param("userId")Integer userId);
+
 }
