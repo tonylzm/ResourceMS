@@ -79,7 +79,7 @@ public class LoginController {
     login.setLoginTime(new Date());
     login.setUserId(user.getUserId());
     loginService.insert(login);
-    
+
     //获取当前用户当前登录次数
     int todayCount = loginService.selectTodayCountByUserId(user.getUserId());
     map.put("todayCount", todayCount);
@@ -106,4 +106,28 @@ public class LoginController {
     map.put("total", pageInfo.getTotal());
     return map;
   }
+
+  /**
+   * 更改密码
+   *  onu.userId 用户id
+   *  onu.old_password 老密码
+   *  onu.new_password 新密码
+   * @param onu Map映射
+   * @return 返回具体是否成功信息
+   */
+  @RequestMapping(value="/changepassword",method = RequestMethod.POST)
+  public ResponseDto passwordChange
+//        (@RequestParam("old_password")String oldPassword,@RequestParam("new_password")String newPassword,@RequestParam("user_id")Integer userId){
+      (@RequestBody Map onu){
+    String oldPassword=(String) onu.get("old_password");
+    String newPassword=(String) onu.get("new_password");
+    Integer userId=(Integer) onu.get("user_id");
+    boolean verify= loginService.verifyPassword(oldPassword,userId);
+    boolean change=false;
+    if(verify){change=loginService.passwordChange(newPassword, userId);}
+    else{return new ResponseDto(201,"原密码不正确",null);}
+    if(change){return new ResponseDto(200,"成功修改密码",null);}
+    else{return new ResponseDto(201,"修改密码失败",null);}
+  }
+
 }
