@@ -182,12 +182,7 @@ public class ReserveController {
         Reservation reservation = new Reservation();
         reservation.setReserveId(reserveId_);
         reservation.setApplyReason(req.get("applyReason"));
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date startTime = simpleDateFormat.parse(req.get("startTime"));
-        Date endTime = simpleDateFormat.parse(req.get("endTime"));
-        reservation.setStartTime(startTime);
-        reservation.setEndTime(endTime);
-        reservation.setReserveState("申请中");
+         reservation.setReserveState("申请中");
         reserveService.updateReserve(reservation);
         return new ResponseDto(200, "更新成功");
     }
