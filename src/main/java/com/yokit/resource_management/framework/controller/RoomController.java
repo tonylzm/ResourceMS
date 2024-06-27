@@ -102,14 +102,14 @@ public class RoomController {
      * @Date ${time} ${date}
      * @Param
      **/
-    @PutMapping("/room/{roomId}")
-    public ResponseDto updateRoom(@PathVariable String roomId, @RequestBody Room room) {
-        Integer roomId_ = Integer.parseInt(roomId);
-        room.setRoomId(roomId_);
-        roomService.update(room);
-        return new ResponseDto(200, "更新成功");
-
-    }
+//    @PutMapping("/room/{roomId}")
+//    public ResponseDto updateRoom(@PathVariable String roomId, @RequestBody Room room) {
+//        Integer roomId_ = Integer.parseInt(roomId);
+//        room.setRoomId(roomId_);
+//        roomService.update(room);
+//        return new ResponseDto(200, "更新成功");
+//
+//    }
     
     
     /**
@@ -125,6 +125,31 @@ public class RoomController {
 
         return new ResponseDto(200, "删除成功");
 
+    }
+
+    @PutMapping("/room/{roomId}")
+    public ResponseDto editRoom(@PathVariable String roomId,@RequestBody Map<String, Object> addRoom){
+        Integer roomId_ = Integer.parseInt(roomId);
+        String roomName = (String) addRoom.get("roomName");
+        Object roomDescObj = addRoom.get("roomDesc");
+        String roomPic = (String) addRoom.get("roomPic");
+
+        String roomDesc;
+        if (roomDescObj instanceof List) {
+            // 如果 carDesc 是一个列表，将其转换为字符串
+            roomDesc = String.join(", ", (List<String>) roomDescObj);
+        } else {
+            roomDesc = (String) roomDescObj;
+        }
+
+        Room room = new Room();
+        room.setRoomId(roomId_);
+        room.setRoomDesc(roomDesc);
+        room.setRoomName(roomName);
+        room.setRoomPic(roomPic);
+
+        roomService.updateRoom(room);
+        return new ResponseDto(200, "更新成功");
     }
 }
 

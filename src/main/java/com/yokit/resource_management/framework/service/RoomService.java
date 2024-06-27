@@ -37,4 +37,8 @@ public class RoomService {
     public void deleteRoomById(Integer roomId_) {
         roomDao.deleteByPrimaryKey(roomId_);
     }
+
+    public void updateRoom(Room room) {
+        roomDao.updateByPrimaryKeySelective(room);
+    }
 }

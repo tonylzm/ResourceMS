@@ -37,4 +37,8 @@ public class CarService {
 
     return carDao.selectCarByName(searchCar);
   }
+
+    public void updateCar(Car car) {
+    carDao.updateByPrimaryKeySelective(car);
+    }
 }

@@ -132,6 +132,31 @@ public class CarController {
 
 }
 
+@PutMapping("/car/{carID}")
+  //更新车辆信息
+  public ResponseDto editCar(@PathVariable String carID,@RequestBody Map<String, Object> addCar){
+    Integer carId_ = Integer.parseInt(carID);
+    String carName = (String) addCar.get("carName");
+    Object carDescObj = addCar.get("carDesc");
+    String carPic = (String) addCar.get("carPic");
+
+  String carDesc;
+  if (carDescObj instanceof List) {
+    // 如果 carDesc 是一个列表，将其转换为字符串
+    carDesc = String.join(", ", (List<String>) carDescObj);
+  } else {
+    carDesc = (String) carDescObj;
+  }
+
+    Car car = new Car();
+    car.setCarId(carId_);
+    car.setCarName(carName);
+    car.setCarDesc(carDesc);
+    car.setCarPic(carPic);
+    carService.updateCar(car);
+    return new ResponseDto(200, "更新成功");
+  }
+
 
 }
 

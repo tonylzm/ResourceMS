@@ -5,7 +5,12 @@ server:
 spring:
   application:
     name: resource-management
-#数据库配置
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  #数据库配置
   datasource:
     url: jdbc:mysql://localhost:3306/resourcems?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -31,4 +36,5 @@ logging:
 user:
   file:
     path: D:/temp/upload/imag/
+
 
