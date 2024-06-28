@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author fengzeng
- * @create 2021/6/10 21:17
+ * @author tonylin
+ * @create 2024/6/30 21:17
  */
 @Configuration
 public class AppConfig {

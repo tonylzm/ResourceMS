@@ -2,6 +2,7 @@ package com.yokit.resource_management.framework.dao;
 
 import com.yokit.resource_management.entity.Room;
 import com.yokit.resource_management.entity.User;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 

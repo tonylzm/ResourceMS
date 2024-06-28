@@ -135,6 +135,23 @@ public class ReserveController {
       return new ResponseDto(200,"获取预约信息成功",objects);
   }
 
+  @GetMapping("/reserve/{types}/{Id}")
+  //在预约表中查询会议室的预约信息，输出预约信息
+    public ResponseDto selByRoomIds(@PathVariable("types") String types,@PathVariable("Id") String Id,@RequestParam("date") String date){
+    Integer Id_ = Integer.parseInt(Id);
+    //如果是car类型，就调用selByCarId方法，如果是room类型，就调用selByRoomId方法
+    if("car".equals(types)){
+      List<ResersvationRoomCar> cars = reserveService.selectCar(Id_,date);
+      return new ResponseDto(200,"获取预约信息成功",cars);
+    }else if("room".equals(types)){
+      List<ResersvationRoomCar> rooms = reserveService.selectRoom(Id_,date);
+      return new ResponseDto(200,"获取预约信息成功",rooms);
+    }
+    return new ResponseDto(500,"获取预约信息失败");
+
+  }
+
+
     /**
      * 分页查询预约表的所有信息
      * @param statue
@@ -226,15 +243,15 @@ public class ReserveController {
     }
 
     //查询表中已通过申请的开始时间和结束时间
-    @GetMapping("/reservetime")
-    public ResponseDto selByCarId(@RequestParam("carId") String carId,@RequestParam("date") String date) {
+    @GetMapping("/car/{Id}")
+    public ResponseDto selByCarId(@PathVariable("Id") String carId,@RequestParam("date") String date) {
         Integer carId_ = Integer.parseInt(carId);
         List<ResersvationRoomCar> reservations = reserveService.selByCarId(carId_, date);
         return new ResponseDto(200, "查询成功", reservations);
     }
 
-    @GetMapping("/reserveroomtime")
-    public ResponseDto selByRoomId(@RequestParam("roomId") String roomId,@RequestParam("date") String date) {
+    @GetMapping("/room/{Id}")
+    public ResponseDto selByRoomId(@PathVariable("Id") String roomId,@RequestParam("date") String date) {
         Integer roomId_ = Integer.parseInt(roomId);
         List<ResersvationRoomCar> reservations = reserveService.selByRoomId(roomId_, date);
         return new ResponseDto(200, "查询成功", reservations);

@@ -49,6 +49,7 @@ public class ReserveService {
     return reservationDao.selRoom(state);
   }
 
+
   public List<ResersvationRoomCar> selCar(String state, int pageNum, int pageSize) {
     PageHelper.startPage(pageNum, pageSize);
     return reservationDao.selCar(state);
@@ -75,11 +76,19 @@ public class ReserveService {
 
   }
 
+
   public List selByRoomId(Integer roomId, String date) {
     //返回开始时间和结束时间，如果有多个时间段，那就返回多个时间段
     //将list中每个时间段的开始时间和结束时间拼接成字符串，用-分隔，删除日期部分，返回一个新list
     List<ResersvationRoomCar> reservations = reservationDao.selRoomtime(roomId, date);
     return getList(reservations);
+  }
+
+  public List selectRoom(Integer roomId, String date) {
+    return reservationDao.selRoomtime(roomId, date);
+  }
+  public List selectCar(Integer carId, String date) {
+    return reservationDao.seltime(carId, date);
   }
 
   private List getList(List<ResersvationRoomCar> reservations) {

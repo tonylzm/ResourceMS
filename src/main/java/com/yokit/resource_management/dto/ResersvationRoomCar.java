@@ -27,6 +27,4 @@ public class ResersvationRoomCar {
     private String applyReason;
     private String rejectReason;
     private Object reserveState;
-
-
 }

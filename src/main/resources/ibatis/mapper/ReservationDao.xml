@@ -48,15 +48,15 @@ and user_id=#{userId} and reserve_state=#{state};
           and reserve_state=#{state}
  </select>
     <select id="seltime" resultType="com.yokit.resource_management.dto.ResersvationRoomCar">
-        SELECT r.start_time, r.end_time
-        FROM reservation r
-        WHERE reserve_state = '已通过'
+        SELECT r.start_time, r.end_time,u.login_name
+        FROM reservation r,user u
+        WHERE reserve_state = '已通过' AND u.user_id=r.user_id
           AND (DATE_FORMAT(r.start_time, '%Y-%m-%d') = #{date} OR DATE_FORMAT(r.end_time, '%Y-%m-%d') = #{date}) AND  car_id = #{carId}
     </select>
     <select id="selRoomtime" resultType="com.yokit.resource_management.dto.ResersvationRoomCar">
-        SELECT r.start_time, r.end_time
-        FROM reservation r
-        WHERE reserve_state = '已通过'
+        SELECT r.start_time, r.end_time,u.login_name
+        FROM reservation r,user u
+        WHERE reserve_state = '已通过' AND u.user_id=r.user_id
           AND (DATE_FORMAT(r.start_time, '%Y-%m-%d') = #{date} OR DATE_FORMAT(r.end_time, '%Y-%m-%d') = #{date}) AND  room_id = #{roomId}
     </select>
     <select id="selByUserId"  resultType="com.yokit.resource_management.dto.ResersvationRoomCar">

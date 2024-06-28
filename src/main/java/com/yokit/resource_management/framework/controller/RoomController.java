@@ -110,6 +110,16 @@ public class RoomController {
 //        return new ResponseDto(200, "更新成功");
 //
 //    }
+
+    @PutMapping("/room/{roomId}/{type}")
+    public ResponseDto updateRoom(@PathVariable String roomId, @PathVariable String type) {
+        Integer roomId_ = Integer.parseInt(roomId);
+         Room room = new Room();
+        room.setRoomId(roomId_);
+        room.setIsActive(type.equalsIgnoreCase("true") ? 1 : 0);
+        roomService.updateRoom(room);
+        return new ResponseDto(200, "更新成功");
+    }
     
     
     /**
