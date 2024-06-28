@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author fengzeng
+ * @author tonylin
  */
 public interface LoginDao {
   int deleteByPrimaryKey(Integer loginId);

@@ -6,8 +6,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 /**
- * @author fengzeng
- * @create 2021/6/25 3:01
+ * @author tonylin
  */
 @Service
 public class ResourceService {

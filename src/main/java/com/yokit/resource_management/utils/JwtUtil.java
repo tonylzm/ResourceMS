@@ -17,8 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 /**
- * @author fengzeng
- * @create 2021/6/10 21:35
+ * @author tonylin
  */
 @Component
 public class JwtUtil {

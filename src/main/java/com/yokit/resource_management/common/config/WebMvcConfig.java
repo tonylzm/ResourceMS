@@ -9,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * @author fengzeng
- * @create 2021/6/10 21:18
+ * @author tonylin
+ * @create 2024/6/30 15:17
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {

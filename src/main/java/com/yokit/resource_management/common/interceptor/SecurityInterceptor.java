@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 /**
- * @author fengzeng
- * @create 2021/6/10 21:22
+ * @author tonylin
+ * @create 2024/6/30 15:17
  */
 public class SecurityInterceptor implements HandlerInterceptor {
 

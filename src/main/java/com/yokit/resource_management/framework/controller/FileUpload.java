@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
- * @author fengzeng
- * @create 2021/6/27 15:29
+ * @author tonylin
+ * @create 2024/6/30 15:17
  */
 @RestController
 public class FileUpload {
@@ -20,6 +20,11 @@ public class FileUpload {
   private String filePath;
 
 
+  /**
+   * 上传文件
+   * @param picture
+   * @return
+   */
   @RequestMapping(value = "/upload",method = RequestMethod.POST)
   public ResponseDto goodsImgUpload(@RequestParam("picture") MultipartFile picture) {
     //获取文件在服务器的储存位置

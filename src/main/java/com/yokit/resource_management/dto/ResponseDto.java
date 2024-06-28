@@ -1,8 +1,8 @@
 package com.yokit.resource_management.dto;
 
 /**
- * @author fengzeng
- * @create 2021/6/10 21:29
+ * @author tonylin
+ * @create 2024/6/30 15:17
  */
 public class ResponseDto<T> {
   private String msg;
